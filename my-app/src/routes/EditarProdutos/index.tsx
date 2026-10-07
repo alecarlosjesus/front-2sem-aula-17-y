@@ -50,8 +50,7 @@ export default function EditarProdutos() {
       }
 
       //Redirect
-      //navigate("/produtos");
-      window.location.href = "/produtos";
+      navigate("/");
 
     } catch (error) {
       console.error(error);
