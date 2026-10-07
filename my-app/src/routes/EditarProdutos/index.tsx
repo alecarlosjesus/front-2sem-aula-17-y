@@ -46,7 +46,7 @@ export default function EditarProdutos() {
       });
 
       if (!response.ok) {
-        throw new Error(`Erro ao atualizar o produto : ${response.status} - ${response.statusText}`);
+        throw new Error(`Erro ao atualizar o produto: ${response.status} - ${response.statusText}`);
       }
 
       //Redirect
