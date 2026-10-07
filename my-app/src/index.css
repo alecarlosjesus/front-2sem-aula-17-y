@@ -1,14 +1,24 @@
 @import "tailwindcss";
 
-:root {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #0f172a;
-    background: #f4f7fb;
-}
-
 
 @layer{
-    
+
+    .container{
+        @apply flex flex-col items-center justify-between  bg-gray-400 mx-auto w-screen h-screen;
+
+        & header{
+            @apply w-full  bg-amber-200;
+        }
+
+        & main{
+            @apply w-full bg-amber-600;
+        }
+
+        & footer{
+            @apply w-full  bg-blue-600;
+        }
+    }
+
     .tbProduto{
         @apply table-auto border-collapse border border-gray-800 mx-auto w-[50%];
         & th,td{
