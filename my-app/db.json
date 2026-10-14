@@ -1,0 +1,65 @@
+{
+  "produtos": [
+    {
+      "id": "1",
+      "nome": "Notebook",
+      "preco": "1500",
+      "estoque": "1"
+    },
+    {
+      "id": "2",
+      "nome": "Teclado",
+      "preco": 210,
+      "estoque": 8
+    },
+    {
+      "id": "3",
+      "nome": "Cadeira Gamer",
+      "preco": "1550",
+      "estoque": "4"
+    },
+    {
+      "id": "4",
+      "nome": "Teclado",
+      "preco": 210,
+      "estoque": 8
+    },
+    {
+      "id": "5",
+      "nome": "Teclado",
+      "preco": 210,
+      "estoque": 8
+    },
+    {
+      "id": "6",
+      "nome": "Teclado",
+      "preco": 210,
+      "estoque": 8
+    },
+    {
+      "id": "7",
+      "nome": "Teclado",
+      "preco": 210,
+      "estoque": 8
+    },
+    {
+      "id": "8",
+      "nome": "Monitor 17",
+      "preco": 870,
+      "estoque": 10
+    },
+    {
+      "id": "9",
+      "nome": "Mouse Pad",
+      "preco": 120,
+      "estoque": 7
+    },
+    {
+      "id": "AVwc5YpMBt0",
+      "nome": "Fone de Ouvido",
+      "preco": 87,
+      "estoque": 120
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
