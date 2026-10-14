@@ -6,9 +6,7 @@ import { MdDeleteForever as Excluir } from "react-icons/md";
 
 export default function Produtos() {
 
-    // const API_URL: string = import.meta.env.VITE_API_URL;
-    const API_URL: string = "https://script.google.com/macros/s/AKfycbxCpoiUJLaeBejeJDAtth0oyo3xu9UN4lAMeJIBD72JTatcHS7WxAaPdc1w6IdYvJBFIQ/exec"
-
+    const API_URL: string = import.meta.env.VITE_API_URL;
 
     const [produtos, setProdutos] = useState<TipoProduto[]>([]);
 
@@ -29,14 +27,9 @@ export default function Produtos() {
                      data:TipoProduto[];
                 } = await response.json();
                 
-                // console.log(data);
-                // const prod: TipoProduto[] = data.slice(1).map((p) => ({
-                //     id: p[0],
-                //     nome: p[1],
-                //     preco: p[2],
-                //     estoque: p[3],
-                //     avatar: p[4]
-                // }));
+                if(resultado.status === "error") {
+                    throw new Error("A listagem dos produtos falhou!");
+                }
 
                 setProdutos(resultado.data);
 
@@ -52,19 +45,37 @@ export default function Produtos() {
 
     const handleDelete = async (id: string) => {
 
-        try {
+        const confirmacao = window.confirm("Deseja realmente excluir o produto?");
+        if (!confirmacao) {
+            return;
+        }
 
-            const response = await fetch(`http://localhost:3001/produtos/${id}`, {
-                method: "DELETE"
+        try {
+            //   const response = await fetch(`http://localhost:3001/produtos/${id}`, {
+
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=UTF-8"
+                },
+                body: JSON.stringify({ id:id,action:"DELETE"})
             });
-            ;
+
             if (!response.ok) {
                 throw new Error(`Erro ao excluir o produto : ${response.status} - ${response.statusText}`);
             }
 
+            const resultado = await response.json();
+
+            if(resultado.status === "error") {
+                throw new Error(`Erro ao excluir o produto : ${resultado.message}`);
+            }
+
             //Redirect
             alert("Produto excluído!");
-            window.location.href = "/produtos";
+            
+            //Atualizando a lista de produtos após a exclusão
+            setProdutos((prevProdutos) => prevProdutos.filter((p) => p.id !== id));
 
         } catch (error) {
             console.error(error);
