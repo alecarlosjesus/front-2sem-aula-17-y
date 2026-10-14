@@ -1,26 +1,46 @@
-import { useState } from "react";
+
 import type { TipoProduto } from "../../types/types";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+
+const API_URL:string = import.meta.env.VITE_API_URL;
 
 export default function CadProduto() {
 
     const navigate = useNavigate();
 
-    const[produto,setProduto] = useState<TipoProduto>({id:"",nome:"",preco:0,estoque:0});
+    const {register,handleSubmit,formState:{errors}} = useForm<TipoProduto>({defaultValues:{id:"",nome:"",preco:0,estoque:0, avatar:""},mode:"onChange"});
 
-    const handlePost = async ()=>{
+    const onSubmit = async (data: TipoProduto)=>{
+
         try {
+
+            const payload = {
+                action: "POST",
+                id:"prod_" + Date.now().toString(),
+                nome: data.nome,
+                preco: data.preco,
+                estoque: data.estoque,
+                avatar: data.avatar
+            }
             
-            const response = await fetch("http://localhost:3001/produtos/", {
+            const response = await fetch(API_URL, {
                 method: "POST",
                 headers:{
-                    "Content-Type":"application/json"
+                    "Content-Type":"text/plain;charset=UTF-8"
                 },
-                body: JSON.stringify(produto)
+                body: JSON.stringify(payload), redirect: "follow"
             });
 
             if(!response.ok){
                 throw Error(`Ocorreu um erro no cadastro do produto: ${response.status} - ${response.statusText}`);
+            }
+
+            const resultado = await response.json();
+
+            
+            if(resultado.status === "error") {
+                throw new Error(`Erro ao cadastrar o produto : ${resultado.message}`);
             }
 
             //Mensagem de sucesso
@@ -37,24 +57,32 @@ export default function CadProduto() {
     return (
         <main>
             <h2>Cadastro de Produtos</h2>
-            <div>
-                <form>
+            <div className="forms">
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <fieldset>
                         <legend>Dados do Produto</legend>
                         <div>
                             <label htmlFor="nome">Nome do Produto</label>
-                            <input type="text" name="nome" id="nome" value={produto.nome} onChange={(e)=> setProduto({...produto,nome:e.target.value})}/>
+                            <input type="text" {...register("nome", { required: "O nome do produto é obrigatório", minLength: { value: 2, message: "O nome do produto deve ter pelo menos 2 caracteres" } })} />
+                            {errors.nome && <span className="error">{errors.nome.message}</span>}
                         </div>
                         <div>
                             <label htmlFor="preco">Preço do Produto</label>
-                            <input type="number" step={0.1} name="preco" id="preco" value={produto.preco} onChange={(e) => setProduto({ ...produto, preco: parseFloat(e.target.value) })} />
+                            <input type="number" {...register("preco", { required: "O preço do produto é obrigatório", min: { value: 0, message: "O preço do produto deve ser um valor positivo" } })} />
+                            {errors.preco && <span className="error">{errors.preco.message}</span>}
                         </div>
                         <div>
                             <label htmlFor="estoque">Estoque do Produto</label>
-                            <input type="number" step={1} name="estoque" id="estoque" value={produto.estoque} onChange={(e) => setProduto({ ...produto, estoque: parseInt(e.target.value) })} />
+                            <input type="number" {...register("estoque", { required: "O estoque do produto é obrigatório", min: { value: 0, message: "O estoque do produto deve ser um valor positivo" } })} />
+                            {errors.estoque && <span className="error">{errors.estoque.message}</span>}
+                        </div>
+                           <div>
+                            <label htmlFor="avatar">Avatar do Produto</label>
+                            <input type="url" {...register("avatar", { required: "O avatar do produto é obrigatório" })} />
+                            {errors.avatar && <span className="error">{errors.avatar.message}</span>}
                         </div>
                         <div>
-                            <button type="button" onClick={()=> handlePost()}>CADASTRAR</button>
+                            <button type="submit">CADASTRAR</button>
                         </div>
 
                     </fieldset>
