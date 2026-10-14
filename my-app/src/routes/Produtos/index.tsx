@@ -6,6 +6,10 @@ import { MdDeleteForever as Excluir } from "react-icons/md";
 
 export default function Produtos() {
 
+    // const API_URL: string = import.meta.env.VITE_API_URL;
+    const API_URL: string = "https://script.google.com/macros/s/AKfycbxCpoiUJLaeBejeJDAtth0oyo3xu9UN4lAMeJIBD72JTatcHS7WxAaPdc1w6IdYvJBFIQ/exec"
+
+
     const [produtos, setProdutos] = useState<TipoProduto[]>([]);
 
     useEffect(() => {
@@ -14,14 +18,27 @@ export default function Produtos() {
         async function carregarProdutos() {
             try {
 
-                const response = await fetch("http://localhost:3001/produtos");
+                // const response = await fetch("http://localhost:3001/produtos");
+                const response = await fetch(API_URL);
 
                 if (!response.ok) {
                     throw new Error("A listagem dos produtos falhou!");
                 }
+                const resultado: {
+                    status: string;
+                     data:TipoProduto[];
+                } = await response.json();
+                
+                // console.log(data);
+                // const prod: TipoProduto[] = data.slice(1).map((p) => ({
+                //     id: p[0],
+                //     nome: p[1],
+                //     preco: p[2],
+                //     estoque: p[3],
+                //     avatar: p[4]
+                // }));
 
-                const data: TipoProduto[] = await response.json();
-                setProdutos(data);
+                setProdutos(resultado.data);
 
             } catch (error) {
                 console.error(error);
@@ -67,6 +84,7 @@ export default function Produtos() {
                             <th>NOME</th>
                             <th>PREÇO</th>
                             <th>ESTOQUE</th>
+                            <th>AVATAR</th>
                             <th>AÇÕES</th>
                         </tr>
                     </thead>
@@ -78,6 +96,7 @@ export default function Produtos() {
                                 <td>{p.nome}</td>
                                 <td>{p.preco}</td>
                                 <td>{p.estoque}</td>
+                                <td><img src={p.avatar} alt={p.nome} /></td>
                                 <td className="acoes">
                                     <Link to={`/editar-produtos/${p.id}`}> <Editar /> </Link> /
                                     <Link to="#" onClick={() => handleDelete(p.id)}><Excluir /></Link>

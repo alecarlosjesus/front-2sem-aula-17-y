@@ -13,4 +13,5 @@ export type TipoProduto = {
     nome: string;
     preco: number;
     estoque: number;
+    avatar:string;
 }
