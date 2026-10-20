@@ -65,21 +65,24 @@ export default function EditarProdutos() {
   }
 
   return (
-    <main>
-      <h2>Editar Produtos</h2>
+    <main className="pagina pagina-formulario">
+      <div className="titulo-pagina">
+        <p>Atualização</p>
+        <h2>Editar produto</h2>
+      </div>
       <div className="forms">
         <form>
           <fieldset>
             <legend>Produto:{produto.nome}</legend>
-            <div>
+            <div className="campo-formulario">
               <label htmlFor="nome">Nome produto:</label>
               <input type="text" name="nome" id="nome" value={produto.nome} onChange={(e) => alteraDadosCampo(e)} />
             </div>
-            <div>
+            <div className="campo-formulario">
               <label htmlFor="estoque">Estoque:</label>
               <input type="number" name="estoque" id="estoque" value={produto.estoque} onChange={(e) => alteraDadosCampo(e)} />
             </div>
-            <div>
+            <div className="campo-formulario">
               <label htmlFor="preco">Preço:</label>
               <input type="number" name="preco" id="preco" value={produto.preco} onChange={(e) => alteraDadosCampo(e)} />
             </div>

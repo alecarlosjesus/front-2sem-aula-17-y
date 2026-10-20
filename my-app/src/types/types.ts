@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 // Aqui definimos o molde do nosso objeto de produto.
 // Cada produto OBRIGATORIAMENTE deve ter esses campos e esses tipos:
 // export interface TipoProduto {
@@ -14,4 +16,15 @@ export type TipoProduto = {
     preco: number;
     estoque: number;
     avatar:string;
+}
+
+export type Tema = "light" | "dark";
+
+export type TipoTemaContext = {
+    tema: Tema;
+    alternarTema: () => void;
+}
+
+export type TipoTemaProviderProps = {
+    children: ReactNode;
 }

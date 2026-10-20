@@ -145,26 +145,32 @@ export default function CadProduto() {
     // }
 
     return (
-        <main>
-            <h2>Cadastro de Produtos</h2>
+        <main className="pagina pagina-formulario">
+            <div className="titulo-pagina">
+                <p>Novo registro</p>
+                <h2>Cadastro de produto</h2>
+            </div>
             <div className="forms">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <fieldset>
-                        <legend>Dados do Produto</legend>
-                        <div>
+                        <legend>Dados do produto</legend>
+                        <div className="campo-formulario">
                             <label htmlFor="nome">Nome do Produto</label>
-                            <input type="text" {...register("nome", { required: true, minLength: { value: 2, message: "O nome do produto deve ter pelo menos 2 caracteres" } })} />
+                            <input id="nome" type="text" {...register("nome", { required: "O nome do produto é obrigatório", minLength: { value: 2, message: "O nome do produto deve ter pelo menos 2 caracteres" } })} />
+                            {errors.nome?.message && <span className="mensagem-erro">{errors.nome.message}</span>}
                         </div>
-                        <div>
+                        <div className="campo-formulario">
                             <label htmlFor="preco">Preço do Produto</label>
-                            <input type="number" step={0.1} id="preco" {...register("preco", { required: true , min:{ value: 1, message: "O preço do produto deve ser um número positivo" } })} />
+                            <input type="number" step={0.1} id="preco" {...register("preco", { valueAsNumber: true, required: "O preço é obrigatório", min:{ value: 1, message: "O preço do produto deve ser um número positivo" } })} />
+                            {errors.preco?.message && <span className="mensagem-erro">{errors.preco.message}</span>}
                         </div>
-                        <div>
+                        <div className="campo-formulario">
                             <label htmlFor="estoque">Estoque do Produto</label>
-                            <input type="number" step={1} id="estoque" {...register("estoque", { required: true, min: { value: 0, message: "O estoque do produto deve ser um número não negativo" } })} />
+                            <input type="number" step={1} id="estoque" {...register("estoque", { valueAsNumber: true, required: "O estoque é obrigatório", min: { value: 0, message: "O estoque do produto deve ser um número não negativo" } })} />
+                            {errors.estoque?.message && <span className="mensagem-erro">{errors.estoque.message}</span>}
                         </div>
-                        <div>
-                            <div style={{ marginBottom: "12px" }}>
+                        <div className="campo-formulario">
+                            <div>
   <label htmlFor="arquivoImg">Avatar Produto: </label>
   <input
     type="file"
@@ -175,7 +181,7 @@ export default function CadProduto() {
   />
   <input type="hidden" {...register("avatar")} />
   {lendoImagem && (
-    <p style={{ color: "#2563eb" }}>
+    <p className="mensagem-leitura">
       Lendo e convertendo imagem...
     </p>
   )}
@@ -194,7 +200,9 @@ export default function CadProduto() {
 </div>
                         </div>
                         <div>
-                            <button type="submit">CADASTRAR</button>
+                            <button type="submit" disabled={isSubmitting || lendoImagem}>
+                                {isSubmitting ? "CADASTRANDO..." : "CADASTRAR"}
+                            </button>
                         </div>
 
                     </fieldset>

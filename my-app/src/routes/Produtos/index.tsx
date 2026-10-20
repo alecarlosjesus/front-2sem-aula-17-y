@@ -81,10 +81,13 @@ export default function Produtos() {
     }
 
     return (
-        <main>
-            <h2>Produtos</h2>
+        <main className="pagina produtos">
+            <div className="titulo-pagina">
+                <p>Gerenciamento</p>
+                <h2>Produtos cadastrados</h2>
+            </div>
 
-            <div>
+            <div className="painel tabela-responsiva">
                 <table className="tbProduto">
 
                     <thead>
@@ -103,12 +106,12 @@ export default function Produtos() {
                             <tr key={i}>
                                 <td>{p.id}</td>
                                 <td>{p.nome}</td>
-                                <td>{p.preco}</td>
-                                <td>{p.estoque}</td>
-                                <td><img src={p.avatar} alt={p.nome} /></td>
+                                <td>{Number(p.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</td>
+                                <td><span className="estoque">{p.estoque}</span></td>
+                                <td><img className="avatar-produto" src={p.avatar} alt={p.nome} /></td>
                                 <td className="acoes">
-                                    <Link to={`/editar-produtos/${p.id}`}> <Editar /> </Link> /
-                                    <Link to="#" onClick={() => handleDelete(p.id)}><Excluir /></Link>
+                                    <Link className="editar" to={`/editar-produtos/${p.id}`} aria-label={`Editar ${p.nome}`}><Editar /></Link>
+                                    <button className="excluir" type="button" onClick={() => handleDelete(p.id)} aria-label={`Excluir ${p.nome}`}><Excluir /></button>
                                 </td>
                             </tr>
                         ))}
@@ -116,7 +119,7 @@ export default function Produtos() {
 
                     <tfoot>
                         <tr>
-                            <td colSpan={5}>Quantidade de produtos: {produtos?.length}</td>
+                            <td colSpan={6}>Quantidade de produtos: {produtos?.length}</td>
                         </tr>
                     </tfoot>
 

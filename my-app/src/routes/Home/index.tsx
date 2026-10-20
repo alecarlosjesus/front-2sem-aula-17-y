@@ -51,28 +51,44 @@ export default function Home() {
   };
 
   return (
-    <main>
-      <h2>Home</h2>
-
-      <div>
-        <div>
-    
-          <label htmlFor="">Nome User</label>
-          <input
-            type="text"
-            placeholder="Digite o nome a ser pesquisado"  onChange={(e)=> setDigitado(e.target.value)} />
-          <button onClick={buscador}>Pesquisar</button>
-    
-        </div>
+    <main className="pagina home">
+      <div className="titulo-pagina">
+        <p>Consulta de usuários</p>
+        <h2>GitHub Users</h2>
       </div>
 
-      <div>{user}</div>
+      <section className="painel pesquisa" aria-labelledby="titulo-pesquisa">
+        <div>
+          <h3 id="titulo-pesquisa">Pesquisar usuário do GitHub</h3>
+          <p>Informe um nome de usuário para realizar a consulta.</p>
+        </div>
 
-      <ul>
+        <div className="campo-pesquisa">
+          <label htmlFor="nomeUser">Nome do usuário</label>
+          <input
+            id="nomeUser"
+            type="text"
+            placeholder="Ex.: octocat"
+            onChange={(e)=> setDigitado(e.target.value)}
+          />
+          <button type="button" onClick={buscador}>Pesquisar</button>
+        </div>
+      </section>
+
+      {user && (
+        <p className="resultado-pesquisa">
+          Usuário encontrado: <strong>{user}</strong>
+        </p>
+      )}
+
+      <ul className="grade-usuarios">
         {usuarios.map((u) => (
-          <li key={u.id}>
-            {u.id} - {u.login} -{" "}
-            <img src={u.avatar_url} alt={u.login} width={30} />
+          <li className="card-usuario" key={u.id}>
+            <img src={u.avatar_url} alt={`Avatar de ${u.login}`} />
+            <div>
+              <strong>{u.login}</strong>
+              <span>ID: {u.id}</span>
+            </div>
           </li>
         ))}
       </ul>

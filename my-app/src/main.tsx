@@ -10,6 +10,7 @@ import EditarProdutos from './routes/EditarProdutos/index.tsx'
 import Error from './routes/Error/index.tsx'
 import Home from './routes/Home/index.tsx'
 import CadProduto from './routes/CadProduto/index.tsx'
+import { TemaProvider } from './providers/TemaProvider.tsx'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <TemaProvider>
+      <RouterProvider router={router} />
+    </TemaProvider>
   </StrictMode>,
 )

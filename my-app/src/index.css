@@ -1,73 +1,351 @@
 @import "tailwindcss";
 
-
-@layer{
-
-    .container{
-        @apply flex flex-col items-center justify-between  bg-gray-400 mx-auto w-screen h-screen;
-
-        & header{
-            @apply w-full  bg-amber-200;
-        }
-
-        & main{
-            @apply w-full bg-amber-600;
-        }
-
-        & footer{
-            @apply w-full  bg-blue-600;
-        }
+@layer base {
+    * {
+        box-sizing: border-box;
     }
 
-    .tbProduto{
-        @apply table-auto border-collapse border border-gray-800 mx-auto w-[50%];
-        & th,td{
-            @apply border border-gray-800;
-        }
-
-        & td{
-            @apply text-center;
-        }
-
-
-    }
-    
-    .acoes a svg{
-            @apply inline;
+    body {
+        @apply m-0 min-w-80 font-sans;
     }
 
+    button,
+    input {
+        font: inherit;
+    }
+}
 
-    .forms{
-        @apply bg-amber-950 w-full h-screen;
+@layer components {
+    .aplicacao {
+        @apply flex min-h-screen flex-col bg-slate-100 text-slate-900 transition-colors duration-300;
+    }
 
-        & form{
-            @apply bg-gray-900 w-2xl h-full my-auto mx-auto flex flex-col items-center justify-center gap-4 rounded-lg text-white;
+    .aplicacao.dark {
+        @apply bg-slate-950 text-slate-100;
+    }
 
-            & fieldset{
-                @apply w-[90%] h-full ;
-                
-                & legend{
-                    @apply text-2xl font-bold text-center inline-block w-full mb-4;
-                }
-            }
+    .cabecalho {
+        @apply w-full bg-indigo-700 text-white shadow-lg transition-colors duration-300;
+    }
 
+    .dark .cabecalho {
+        @apply border-b border-slate-800 bg-slate-900;
+    }
 
-            & input{
-                @apply w-full h-10 my-2 rounded-lg text-black bg-amber-50;
+    .cabecalho-conteudo {
+        @apply mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-5 px-4 py-5 md:flex-row;
+    }
 
-            }
+    .marca {
+        @apply text-center md:text-left;
+    }
 
-            & button{
-                @apply w-1/3 h-10 rounded-lg bg-amber-600 text-white;
-            }
-            
-            & .preview{
-                @apply w-full h-40 flex flex-col items-center justify-center gap-2;
-                & img{
-                    @apply w-full object-cover border border-gray-800;
-                }
-            }
+    .marca h1 {
+        @apply text-xl font-bold tracking-tight sm:text-2xl;
+    }
 
-        }
+    .marca p {
+        @apply mt-1 text-xs text-indigo-100 sm:text-sm;
+    }
+
+    .dark .marca p {
+        @apply text-slate-400;
+    }
+
+    .menu {
+        @apply flex flex-wrap items-center justify-center gap-1 sm:gap-2;
+    }
+
+    .menu a {
+        @apply rounded-lg px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white;
+    }
+
+    .dark .menu a {
+        @apply hover:bg-slate-800;
+    }
+
+    .botao-tema {
+        @apply flex cursor-pointer items-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white;
+    }
+
+    .dark .botao-tema {
+        @apply border-slate-600 bg-slate-800 hover:bg-slate-700;
+    }
+
+    .pagina {
+        @apply mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8;
+    }
+
+    .titulo-pagina {
+        @apply mb-6;
+    }
+
+    .titulo-pagina p {
+        @apply mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600;
+    }
+
+    .dark .titulo-pagina p {
+        @apply text-indigo-400;
+    }
+
+    .titulo-pagina h2 {
+        @apply text-3xl font-bold tracking-tight text-slate-900;
+    }
+
+    .dark .titulo-pagina h2 {
+        @apply text-white;
+    }
+
+    .painel {
+        @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 sm:p-6;
+    }
+
+    .dark .painel {
+        @apply border-slate-800 bg-slate-900;
+    }
+
+    .pesquisa {
+        @apply grid gap-5 lg:grid-cols-[1fr_1.5fr] lg:items-end;
+    }
+
+    .pesquisa h3 {
+        @apply text-xl font-bold;
+    }
+
+    .pesquisa p {
+        @apply mt-1 text-sm text-slate-600;
+    }
+
+    .dark .pesquisa p {
+        @apply text-slate-400;
+    }
+
+    .campo-pesquisa {
+        @apply grid gap-2 sm:grid-cols-[1fr_auto] sm:items-end;
+    }
+
+    .campo-pesquisa label {
+        @apply text-sm font-semibold sm:col-span-2;
+    }
+
+    .campo-pesquisa input,
+    .campo-formulario input {
+        @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100;
+    }
+
+    .dark .campo-pesquisa input,
+    .dark .campo-formulario input {
+        @apply border-slate-700 bg-slate-950 text-slate-100 focus:border-indigo-400 focus:ring-indigo-950;
+    }
+
+    .campo-pesquisa button,
+    .forms button {
+        @apply cursor-pointer rounded-lg bg-indigo-600 px-5 py-3 font-bold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-200 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .dark .campo-pesquisa button,
+    .dark .forms button {
+        @apply bg-indigo-500 hover:bg-indigo-400 focus:ring-indigo-950;
+    }
+
+    .resultado-pesquisa {
+        @apply mt-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-800;
+    }
+
+    .dark .resultado-pesquisa {
+        @apply border-emerald-900 bg-emerald-950 text-emerald-300;
+    }
+
+    .grade-usuarios {
+        @apply mt-6 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+    }
+
+    .card-usuario {
+        @apply flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md;
+    }
+
+    .dark .card-usuario {
+        @apply border-slate-800 bg-slate-900;
+    }
+
+    .card-usuario img {
+        @apply h-14 w-14 rounded-full border-2 border-indigo-100 object-cover;
+    }
+
+    .dark .card-usuario img {
+        @apply border-indigo-900;
+    }
+
+    .card-usuario div {
+        @apply flex min-w-0 flex-col;
+    }
+
+    .card-usuario strong {
+        @apply truncate;
+    }
+
+    .card-usuario span {
+        @apply text-sm text-slate-500;
+    }
+
+    .dark .card-usuario span {
+        @apply text-slate-400;
+    }
+
+    .tabela-responsiva {
+        @apply overflow-x-auto p-0;
+    }
+
+    .tbProduto {
+        @apply w-full min-w-3xl border-collapse text-left;
+    }
+
+    .tbProduto th {
+        @apply bg-indigo-600 px-4 py-3 text-xs font-bold uppercase tracking-wider text-white;
+    }
+
+    .dark .tbProduto th {
+        @apply bg-indigo-950 text-indigo-100;
+    }
+
+    .tbProduto td {
+        @apply border-t border-slate-200 px-4 py-3 text-sm;
+    }
+
+    .dark .tbProduto td {
+        @apply border-slate-800;
+    }
+
+    .tbProduto tbody tr {
+        @apply transition-colors hover:bg-indigo-50;
+    }
+
+    .dark .tbProduto tbody tr {
+        @apply hover:bg-slate-800/80;
+    }
+
+    .tbProduto tfoot td {
+        @apply bg-slate-50 font-semibold text-slate-600;
+    }
+
+    .dark .tbProduto tfoot td {
+        @apply bg-slate-950 text-slate-400;
+    }
+
+    .avatar-produto {
+        @apply h-12 w-12 rounded-lg border border-slate-200 object-cover;
+    }
+
+    .dark .avatar-produto {
+        @apply border-slate-700;
+    }
+
+    .estoque {
+        @apply inline-flex min-w-9 justify-center rounded-full bg-emerald-100 px-3 py-1 font-bold text-emerald-700;
+    }
+
+    .dark .estoque {
+        @apply bg-emerald-950 text-emerald-300;
+    }
+
+    .acoes {
+        @apply whitespace-nowrap;
+    }
+
+    .acoes a,
+    .acoes button {
+        @apply mx-1 inline-flex cursor-pointer rounded-lg p-2 text-lg transition-colors;
+    }
+
+    .acoes .editar {
+        @apply bg-indigo-100 text-indigo-700 hover:bg-indigo-200;
+    }
+
+    .dark .acoes .editar {
+        @apply bg-indigo-950 text-indigo-300 hover:bg-indigo-900;
+    }
+
+    .acoes .excluir {
+        @apply border-0 bg-red-100 text-red-700 hover:bg-red-200;
+    }
+
+    .dark .acoes .excluir {
+        @apply bg-red-950 text-red-300 hover:bg-red-900;
+    }
+
+    .pagina-formulario {
+        @apply max-w-3xl;
+    }
+
+    .forms {
+        @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 sm:p-8;
+    }
+
+    .dark .forms {
+        @apply border-slate-800 bg-slate-900;
+    }
+
+    .forms fieldset {
+        @apply grid gap-5 border-0 p-0;
+    }
+
+    .forms legend {
+        @apply mb-6 w-full border-b border-slate-200 pb-4 text-xl font-bold;
+    }
+
+    .dark .forms legend {
+        @apply border-slate-700;
+    }
+
+    .campo-formulario {
+        @apply grid gap-2;
+    }
+
+    .campo-formulario label {
+        @apply text-sm font-semibold;
+    }
+
+    .campo-formulario input[type="file"] {
+        @apply cursor-pointer file:mr-4 file:rounded-md file:border-0 file:bg-indigo-100 file:px-4 file:py-2 file:font-semibold file:text-indigo-700 hover:file:bg-indigo-200;
+    }
+
+    .dark .campo-formulario input[type="file"] {
+        @apply file:bg-indigo-950 file:text-indigo-300 hover:file:bg-indigo-900;
+    }
+
+    .mensagem-erro {
+        @apply text-sm font-semibold text-red-600;
+    }
+
+    .dark .mensagem-erro {
+        @apply text-red-400;
+    }
+
+    .mensagem-leitura {
+        @apply text-sm font-semibold text-indigo-600;
+    }
+
+    .dark .mensagem-leitura {
+        @apply text-indigo-400;
+    }
+
+    .preview {
+        @apply mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-center;
+    }
+
+    .dark .preview {
+        @apply border-slate-700 bg-slate-950;
+    }
+
+    .preview img {
+        @apply mx-auto mt-3 max-h-64 max-w-full rounded-lg object-contain;
+    }
+
+    .rodape {
+        @apply mt-auto w-full bg-slate-900 px-4 py-5 text-center text-sm text-slate-300;
+    }
+
+    .dark .rodape {
+        @apply border-t border-slate-800 bg-black;
     }
 }
