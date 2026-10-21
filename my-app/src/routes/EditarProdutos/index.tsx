@@ -2,26 +2,33 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import type { TipoProduto } from "../../types/types";
 
+  const API_URL: string = import.meta.env.VITE_API_URL;
+
 export default function EditarProdutos() {
 
   const navigate = useNavigate();
 
   const { id } = useParams<{ id: string }>();
 
-  const [produto, setProduto] = useState<TipoProduto>({} as TipoProduto);
+  const [produto, setProduto] = useState<TipoProduto>({id: "", nome: "",preco: 0,estoque: 0,avatar: ""});
 
   useEffect(() => {
     const carregarProduto = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/produtos/${id}`);
+        const response = await fetch(`${API_URL}?id=${id}`);
 
         if (!response.ok) {
           throw new Error("Produto não encontrado!");
         }
 
-        const data: TipoProduto = await response.json();
-        console.log(data);
+        const {data,status} = await response.json();
+
+        if (status === "error") {
+          throw new Error(`Erro na busca do produto: ${status}`);
+        }
+
         setProduto(data);
+
       } catch (error) {
         console.error(error);
       }
@@ -37,20 +44,27 @@ export default function EditarProdutos() {
   const onSubmit = async () => {
     try {
 
-      const response = await fetch(`http://localhost:3001/produtos/${produto.id}`, {
-        method: "PUT",
+      const response = await fetch(API_URL, {
+        method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "text/plain;charset=utf-8"
         },
-        body: JSON.stringify(produto)
+        body: JSON.stringify({action:"PUT", ...produto})
       });
 
       if (!response.ok) {
         throw new Error(`Erro ao atualizar o produto: ${response.status} - ${response.statusText}`);
       }
 
+        const {status} = await response.json();
+      
+        if (status === "error") {
+          throw new Error(`Erro na busca do produto: ${status}`);
+        }
+
+        alert("Produto atualizado com sucesso!");
       //Redirect
-      navigate("/");
+      navigate("/produtos");
 
     } catch (error) {
       console.error(error);
