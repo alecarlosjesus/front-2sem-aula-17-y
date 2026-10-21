@@ -9,7 +9,7 @@ export default function Produtos() {
     const API_URL: string = import.meta.env.VITE_API_URL;
 
     const [produtos, setProdutos] = useState<TipoProduto[]>([]);
-
+  
     useEffect(() => {
 
         //Realizando o GetAllProdutos
