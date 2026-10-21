@@ -55,7 +55,7 @@ export default function CadProduto() {
     }
 
     return (
-        <main>
+        <main className="cadastro-produto">
             <h2>Cadastro de Produtos</h2>
             <div className="forms">
                 <form onSubmit={handleSubmit(onSubmit)}>

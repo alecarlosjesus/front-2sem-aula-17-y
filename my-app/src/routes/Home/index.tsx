@@ -51,7 +51,7 @@ export default function Home() {
   };
 
   return (
-    <main>
+    <main className="home">
       <h2>Home</h2>
 
       <div>
@@ -70,9 +70,13 @@ export default function Home() {
 
       <ul>
         {usuarios.map((u) => (
-          <li key={u.id}>
+          <li className="card-usuario" key={u.id}>
             {u.id} - {u.login} -{" "}
-            <img src={u.avatar_url} alt={u.login} width={30} />
+            <img src={u.avatar_url} alt={u.login}/>
+            <div>
+              <strong>{u.login}</strong>
+              <span>ID: {u.id}</span>
+            </div>
           </li>
         ))}
       </ul>

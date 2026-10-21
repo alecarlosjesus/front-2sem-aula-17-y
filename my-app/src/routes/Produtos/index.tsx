@@ -82,7 +82,7 @@ export default function Produtos() {
     }
 
     return (
-        <main>
+        <main className="produtos">
             <h2>Produtos</h2>
 
             <div>

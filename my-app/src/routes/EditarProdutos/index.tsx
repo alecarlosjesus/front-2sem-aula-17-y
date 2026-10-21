@@ -72,7 +72,7 @@ export default function EditarProdutos() {
   }
 
   return (
-    <main>
+    <main className="editar-produto">
       <h2>Editar Produtos</h2>
       <div>
         <form>
