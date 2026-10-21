@@ -16,7 +16,7 @@ export default function Produtos() {
         async function carregarProdutos() {
             try {
 
-                // const response = await fetch("http://localhost:3001/produtos");
+                
                 const response = await fetch(API_URL);
 
                 if (!response.ok) {
@@ -51,8 +51,7 @@ export default function Produtos() {
         }
 
         try {
-            //   const response = await fetch(`http://localhost:3001/produtos/${id}`, {
-
+           
             const response = await fetch(API_URL, {
                 method: "POST",
                 headers: {
